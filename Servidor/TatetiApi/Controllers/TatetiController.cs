@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TatetiApi.Clases;
 
 namespace TatetiApi.Controllers
 {
@@ -7,9 +8,11 @@ namespace TatetiApi.Controllers
     {
         [HttpPost]
         [Route("crearTablero")]
-        public void crearTablero()
+        public Tablero crearTablero()
         {
+            Tablero tablero = new Tablero();
 
+            return tablero;
         }
 
         [HttpGet]
