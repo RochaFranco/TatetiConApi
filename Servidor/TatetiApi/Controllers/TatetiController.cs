@@ -16,6 +16,7 @@ namespace TatetiApi.Controllers
         public Tablero crearTablero()
         {
             tablero = new Tablero();
+            Console.WriteLine("Cree el tablero");
 
             return tablero;
         }
@@ -31,7 +32,6 @@ namespace TatetiApi.Controllers
         [Route("ponerFicha")]
         public Tablero ponerFicha([FromBody] Casilla casilla)
         {
-
             if (ronda == 0)
             {
                 ronda = 1;
