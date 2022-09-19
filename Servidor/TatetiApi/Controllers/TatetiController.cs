@@ -85,5 +85,33 @@ namespace TatetiApi.Controllers
 
             return tablero;
         }
+
+        [HttpGet]
+        [Route("mandarFicha/{fila}/{col}")]
+        public int mandarFicha(int fila, int col)
+        {
+            if (fila == 0)
+            {
+                if (tablero.filaUno[col] != 0)
+                {
+                    return tablero.filaUno[col];
+                }
+            }
+            else if (fila == 1)
+            {
+                if (tablero.filaDos[col] != 0)
+                {
+                    return tablero.filaDos[col];
+                }
+            }
+            else if(fila == 2)
+            {
+                if (tablero.filaTres[col] != 0)
+                {
+                    return tablero.filaTres[col];
+                }
+            }
+            return 0;
+        }
     }
 }
