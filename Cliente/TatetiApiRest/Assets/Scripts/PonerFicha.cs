@@ -11,10 +11,12 @@ public class PonerFicha : MonoBehaviour
     int col;
     [SerializeField]
     int fila;
+    [SerializeField]
+    string boton;
 
     private void Start()
     {
-        GameObject.Find("uno").GetComponent<Button>().onClick.AddListener(CrearTablero);
+        GameObject.Find(boton).GetComponent<Button>().onClick.AddListener(CrearTablero);
     }
 
     public void CrearTablero()
@@ -38,7 +40,7 @@ public class PonerFicha : MonoBehaviour
             }
             else
             {
-                Debug.Log("Upload complete!");
+                //Debug.Log("Upload complete!");
             }
         }
     }

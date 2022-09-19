@@ -9,7 +9,7 @@ public class CrearTableroScript : MonoBehaviour
 
     private void Start()
     {
-        GameObject.Find("Button").GetComponent<Button>().onClick.AddListener(CrearTablero);
+        GameObject.Find("crearTablero").GetComponent<Button>().onClick.AddListener(CrearTablero);
     }
 
     public void CrearTablero()
