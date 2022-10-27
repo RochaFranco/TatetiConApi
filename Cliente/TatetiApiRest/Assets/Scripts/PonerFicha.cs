@@ -14,9 +14,9 @@ public class PonerFicha : MonoBehaviour
     [SerializeField]
     string boton;
 
-    private void Start()
+    public void Start()
     {
-        GameObject.Find(boton).GetComponent<Button>().onClick.AddListener(CrearTablero);
+        
     }
 
     public void CrearTablero()
@@ -24,24 +24,35 @@ public class PonerFicha : MonoBehaviour
         StartCoroutine(CorrutinaPonerFicha());
     }
 
-    private IEnumerator CorrutinaPonerFicha()
+    [System.Obsolete]
+    public IEnumerator CorrutinaPonerFicha()
     {
+
         string url = "https://localhost:7299/ponerFicha";
         string json = "{\"fila\": " + fila + ",\"col\": " + col + "}";
         byte[] myData = System.Text.Encoding.Default.GetBytes(json);
 
         using (UnityWebRequest web = UnityWebRequest.Put(url,myData))
         {
-            web.SetRequestHeader("Content-Type", "application/json");
-            yield return web.SendWebRequest();
-            if (web.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log(web.error);
-            }
-            else
-            {
-                //Debug.Log("Upload complete!");
-            }
+            web.chunkedTransfer = false;
+
+            web.useHttpContinue = false;
+
+                web.SetRequestHeader("Content-Type", "application/json");
+                yield return web.SendWebRequest();
+                if (web.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(web.error);
+                }
+                else
+                {
+                    //Debug.Log("Upload complete!");
+                }
         }
+    }
+
+    IEnumerator Esperar()
+    {
+        yield return new WaitForSeconds(5);
     }
 }

@@ -8,7 +8,7 @@ namespace TatetiApi.Controllers
     {
 
         static Tablero tablero;
-        int ficha = 1;
+        string ficha = null;
         static int ronda;
 
         [HttpPost]
@@ -39,16 +39,16 @@ namespace TatetiApi.Controllers
 
             if ((ronda % 2) == 0)
             {
-                ficha = 2;
+                ficha = "O";
             }
             else
             {
-                ficha = 1;
+                ficha = "X";
             }
 
             if (casilla.fila == 0)
             {
-                if (tablero.filaUno[casilla.col] == 0)
+                if (tablero.filaUno[casilla.col] == null)
                 {
                     tablero.filaUno[casilla.col] = ficha;
                     ronda++;
@@ -60,7 +60,7 @@ namespace TatetiApi.Controllers
             }
             else if (casilla.fila == 1)
             {
-                if (tablero.filaDos[casilla.col] == 0)
+                if (tablero.filaDos[casilla.col] == null)
                 {
                     tablero.filaDos[casilla.col] = ficha;
                     ronda++;
@@ -72,7 +72,7 @@ namespace TatetiApi.Controllers
             }
             else if (casilla.fila == 2)
             {
-                if (tablero.filaTres[casilla.col] == 0)
+                if (tablero.filaTres[casilla.col] == null)
                 {
                     tablero.filaTres[casilla.col] = ficha;
                     ronda++;
@@ -88,30 +88,30 @@ namespace TatetiApi.Controllers
 
         [HttpGet]
         [Route("mandarFicha/{fila}/{col}")]
-        public int mandarFicha(int fila, int col)
+        public string mandarFicha(int fila, int col)
         {
             if (fila == 0)
             {
-                if (tablero.filaUno[col] != 0)
+                if (tablero.filaUno[col] != null)
                 {
                     return tablero.filaUno[col];
                 }
             }
             else if (fila == 1)
             {
-                if (tablero.filaDos[col] != 0)
+                if (tablero.filaDos[col] != null)
                 {
                     return tablero.filaDos[col];
                 }
             }
             else if(fila == 2)
             {
-                if (tablero.filaTres[col] != 0)
+                if (tablero.filaTres[col] != null)
                 {
                     return tablero.filaTres[col];
                 }
             }
-            return 0;
+            return null;
         }
     }
 }

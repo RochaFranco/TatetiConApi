@@ -26,6 +26,10 @@ public class CrearTableroScript : MonoBehaviour
 
         using (UnityWebRequest web = UnityWebRequest.Post(url, form))
         {
+            web.chunkedTransfer = false;
+
+            web.useHttpContinue = false;
+
             yield return web.SendWebRequest();
             if (web.isNetworkError || web.isHttpError)
                 Debug.Log(web.error);

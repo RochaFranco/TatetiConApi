@@ -2,9 +2,9 @@
 {
     public class Tablero
     {
-        public int[] filaUno { get; set; } = new int[3];
-        public int[] filaDos { get; set; } = new int[3];
-        public int[] filaTres { get; set; } = new int[3];
+        public string[] filaUno { get; set; } = new string[3];
+        public string[] filaDos { get; set; } = new string[3];
+        public string[] filaTres { get; set; } = new string[3];
 
     }
 }

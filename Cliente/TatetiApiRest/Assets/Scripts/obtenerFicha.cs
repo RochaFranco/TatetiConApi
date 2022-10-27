@@ -14,29 +14,68 @@ public class obtenerFicha : MonoBehaviour
     string boton;
     [SerializeField]
     InputField outPutArea;
+    PonerFicha ponerFicha;
 
     public void Start()
     {
         GameObject.Find(boton).GetComponent<Button>().onClick.AddListener(VerTablero);
+        ponerFicha = GameObject.Find(boton).GetComponent<PonerFicha>();
     }
 
     public void VerTablero()
     {
-        StartCoroutine(CorrutinaVerTablero());
+        StartCoroutine(ponerFicha.CorrutinaPonerFicha());
+        StartCoroutine(CorrutinaObtenerFicha());
+
     }
 
-    private IEnumerator CorrutinaVerTablero()
+    [System.Obsolete]
+    private IEnumerator CorrutinaObtenerFicha()
     {
         string url = "https://localhost:7299/mandarFicha/" + fila + "/" + col;
 
 
         using (UnityWebRequest web = UnityWebRequest.Get(url))
         {
-            yield return web.SendWebRequest();
-            if (web.isNetworkError || web.isHttpError)
-                Debug.Log(web.error);
-            else
+                web.chunkedTransfer = false;
+
+                web.useHttpContinue = false;
+
+                yield return web.SendWebRequest();
+                if (web.isNetworkError || web.isHttpError)
+                {
+                    Debug.Log(web.error);
+                }
+                else
+                {
+                if (web.downloadHandler.text == "" || web.downloadHandler.text == " " || web.downloadHandler.text == null)
+                {
+                    StartCoroutine(ponerFicha.CorrutinaPonerFicha());
+                    StartCoroutine(CorrutinaObtenerFicha());
+                }
+                Debug.Log(web.downloadHandler.text);
                 outPutArea.text = web.downloadHandler.text;
+            }
+
+
+            /*do
+            {
+                yield return web.SendWebRequest();
+                if (web.isNetworkError || web.isHttpError)
+                    Debug.Log(web.error);
+                else
+                    Debug.Log(web.downloadHandler.text);
+                outPutArea.text = web.downloadHandler.text;
+                Esperar();
+
+            } while (web.downloadHandler.text != null || web.downloadHandler.text != "" || web.downloadHandler.text != " ");*/
+            
         }
     }
+
+    IEnumerator Esperar()
+    {
+        yield return new WaitForSeconds(5);
+    }
+
 }
